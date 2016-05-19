@@ -12,4 +12,4 @@ import streambed as sb
 dataDir = root + '/exampleData/'
 
 xs = sb.CrossSection(dataDir + 'NiagaraCarthrage-78.xsection')
-print(xs.area)
+print('cross sectional area = ' + str(xs.area))

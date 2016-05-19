@@ -17,8 +17,8 @@ class CrossSection(object):
         self.coordinates = rows[2]
 
         """ data """
-        data = np.genfromtxt(filePath, dtype=None, delimiter=',', skip_header=3)
-        x = data['f0'] * 0.01
-        depth = data['f1']
+        data = np.genfromtxt(filePath, dtype=None, delimiter=',', skip_header=3, names=['x','depth'])
+        x = data['x']
+        depth = data['depth']
 
         self.area = np.trapz(depth, x=x)
