@@ -7,4 +7,6 @@
 :License: MIT
 """
 
+from core.parameters import *
+from stream.channel import *
 from stream.crossSection import *

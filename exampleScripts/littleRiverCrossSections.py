@@ -3,13 +3,16 @@
 import os
 import sys
 
-os.path.abspath(os.getcwd())
 os.chdir("..")
 root = os.getcwd()
 sys.path.append(root + '/streambed')
 import streambed as sb
 
-dataDir = root + '/exampleData/'
+parameters = sb.Parameters(root + '/exampleData/')
+print(parameters.sedimentDensity)
 
-xs = sb.CrossSection(dataDir + 'NiagaraCarthrage-78.xsection')
+xs = sb.CrossSection(parameters.dataDirectory + 'NiagaraCarthrage-78.xsection')
 print('cross sectional area = ' + str(xs.area))
+
+chan = sb.Channel(parameters.dataDirectory + 'LittleRiver.channel')
+print(chan.elevation)

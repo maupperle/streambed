@@ -17,7 +17,7 @@ class CrossSection(object):
         self.coordinates = rows[2]
 
         """ data """
-        data = np.genfromtxt(filePath, dtype=None, delimiter=',', skip_header=3, names=['x','depth'])
+        data = np.genfromtxt(filePath, dtype=None, delimiter=',', skip_header=3, names=['x', 'depth'])
         x = data['x']
         depth = data['depth']
 
