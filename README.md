@@ -1,10 +1,10 @@
-# Streambed
+## Streambed
 
 This Python program predicts reach-averaged streambed sediment grain size. The implementation is based on Wilkins et al. (2011) and Snyder et al. (2012).
 
 The python distribution on your computer must include Numpy. To install Streambed, simply download or clone this repository.
 
-## References
+#### References
 
 Snyder, N.P., Nesheim,  a. O., Wilkins, B.C., and Edmonds, D. a., 2012, Predicting grain size in gravel-bedded rivers using digital elevation models: Application to three Maine watersheds: Geological Society of America Bulletin, , no. October, doi: 10.1130/B30694.1.
 
