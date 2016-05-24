@@ -2,6 +2,9 @@
 
 class Parameters(object):
     
+    """ Data structure and methods for parameters of a streambed model.
+    """    
+    
     waterDensity = 1000
     gravitationalAcceleration = 9.81
     

@@ -1,0 +1,5 @@
+site name
+date (mmddyy)
+latitude,longitude (decimal degrees)
+x_i (m), depth_i (cm)
+x_i...x_n (m), depth_i...depth_n (cm)
