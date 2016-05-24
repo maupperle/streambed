@@ -25,4 +25,4 @@ print('cross sectional area = ' + str(xs.area))
 
 # Initialize channel
 channel = sb.Channel(parameters.dataDirectory + 'LittleRiver.channel')
-print(channel.elevation)
+print('elevation along channel = ' + str(channel.elevation))
