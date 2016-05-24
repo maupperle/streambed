@@ -14,11 +14,11 @@ Data files can be opened in text editors.
 
 These files contain channel parameters at points along a stream. The first line contains the field names. Rows below contain parameter values. Fields are comma separated. The fields are:
 
-1.	x: The x-coordinate of the point along the stream in length units.
-2.	y: The y-coordinate of the point along the stream in length units.
-3.	elevation: The z-coordinate of the point along the stream in length units.
-4.	drainageArea: The upstream drainage area in area units.
-5.	distanceFromMouth: The stream-long distance of the point to the mouth.
+1.	x: The x-coordinate of the point along the stream.
+2.	y: The y-coordinate of the point along the stream.
+3.	elevation: The z-coordinate of the point along the stream.
+4.	drainageArea: The upstream area that drains to the point.
+5.	distanceFromMouth: The stream-long distance from the stream mouth to the point.
 
 ##### .pebble Files
 
