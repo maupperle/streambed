@@ -1,6 +1,6 @@
 ## Streambed
 
-This Python program predicts reach-averaged streambed sediment grain size. The implementation is based on Wilkins and Snyder (2011) and Snyder et al. (2012).
+This Python library predicts reach-averaged streambed sediment grain size. The implementation is based on Wilkins and Snyder (2011) and Snyder et al. (2012).
 
 #### Installation
 
