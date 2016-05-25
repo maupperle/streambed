@@ -12,7 +12,7 @@ Simply download or clone this repository. The Python distribution on your comput
 
 Set parameters:
 ```python
-parameters = streambed.Parameters(root + '/exampleData/')
+parameters = streambed.Parameters(os.getcwd() + '/exampleData/')
 ```
 Initialize channel:
 ```python
