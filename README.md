@@ -8,13 +8,13 @@ Simply download or clone this repository. The Python distribution on your comput
 
 #### Quick start
 
-1. Set parameters:
+Set parameters:
 ```python
-parameters = sb.Parameters(root + '/exampleData/')
+parameters = streambed.Parameters(root + '/exampleData/')
 ```
-2. Initialize channel:
+Initialize channel:
 ```python
-channel = sb.Channel(parameters.dataDirectory + 'LittleRiver.channel')
+channel = streambed.Channel(parameters.dataDirectory + 'LittleRiver.channel')
 ```
 
 #### Data Files
