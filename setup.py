@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name = 'streambed',
-    packages = ['streambed','core','domain'],
+    packages = ['streambed','streambed/core','streambed/domain'],
     version = '0.3',
     description = 'Model streambed grain size',
     author = 'Nathan Lyons',
