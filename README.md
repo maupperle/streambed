@@ -8,11 +8,13 @@ This Python library predicts reach-averaged streambed sediment grain size.
 
 The Python distribution on your computer must include Numpy.
 
-Install using pip in the terminal or command prompt (Windows). See [this page](https://pip.pypa.io/en/stable/installing) if pip is not installed on your computer
+Install using pip in the terminal or command prompt (Windows). See [this page](https://pip.pypa.io/en/stable/installing) if pip is not installed on your computer.
 
 ```bash
 pip install streambed
 ```
+
+Streambed is now installed in the site-packages directory of your Python distribution.
 
 [Developer installation](https://github.com/nathanlyons/streambed/wiki/Developer-Installation)
 
