@@ -16,7 +16,7 @@ sys.path.append(root + '/streambed')
 import streambed as sb
 
 # Initialize model with default parameters
-model = sb.Model(root + '/exampleData/')
+model = sb.Model(root + '/tutorials/exampleData/')
 
 # Calculate cross-sectional at a site along the river
 xs = sb.CrossSection(model.domain['NiagaraCarthrage-78'])

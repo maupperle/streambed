@@ -10,3 +10,5 @@ from core.model import *
 from core.parameters import *
 from domain.channel import *
 from domain.crossSection import *
+
+__version__ = '0.3'

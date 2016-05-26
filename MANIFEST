@@ -2,3 +2,9 @@
 setup.cfg
 setup.py
 streambed/__init__.py
+streambed/core/__init__.py
+streambed/core/model.py
+streambed/core/parameters.py
+streambed/domain/__init__.py
+streambed/domain/channel.py
+streambed/domain/crossSection.py
