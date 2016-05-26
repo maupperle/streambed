@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name = 'streambed',
-    packages = ['streambed'],
+    packages = ['streambed','core','domain'],
     version = '0.1',
     description = 'A random test lib',
     author = 'Nathan Lyons',
