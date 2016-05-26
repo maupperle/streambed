@@ -4,7 +4,7 @@ setup(
     name = 'streambed',
     packages = ['streambed'],
     version = '0.1',
-    description = 'A random test lib',
+    description = 'Model streambed grain size',
     author = 'Nathan Lyons',
     author_email = 'nathan.j.lyons@gmail.com',
     url = 'https://github.com/nathanlyons/streambed',
