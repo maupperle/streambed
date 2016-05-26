@@ -7,9 +7,10 @@ class Parameters(object):
     
     waterDensity = 1000
     gravitationalAcceleration = 9.81
+    manningsn = 0.07
+    criticalShearStress = 0.0067
     
-    def __init__(self, dataDirectory, sedimentDensity=2650):
+    def __init__(self, sedimentDensity=2650):
 
-        self.dataDirectory = dataDirectory
         self.sedimentDensity = sedimentDensity
         

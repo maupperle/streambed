@@ -6,7 +6,7 @@
 :URL: 
 :License: MIT
 """
-
+from core.model import *
 from core.parameters import *
-from stream.channel import *
-from stream.crossSection import *
+from domain.channel import *
+from domain.crossSection import *

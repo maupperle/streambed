@@ -15,14 +15,14 @@ root = os.getcwd()
 sys.path.append(root + '/streambed')
 import streambed as sb
 
-# Set parameters using default values
-parameters = sb.Parameters(root + '/exampleData/')
-print(parameters.sedimentDensity)
+# Initialize model with default parameters
+model = sb.Model(root + '/exampleData/')
 
 # Calculate cross-sectional at a site along the river
-xs = sb.CrossSection(parameters.dataDirectory + 'NiagaraCarthrage-78.xsection')
+xs = sb.CrossSection(model.domain['NiagaraCarthrage-78'])
+xs.plot()
 print('cross sectional area = ' + str(xs.area))
 
 # Initialize channel
-channel = sb.Channel(parameters.dataDirectory + 'LittleRiver.channel')
-print('elevation along channel = ' + str(channel.elevation))
+channel = sb.Channel(model.domain['LittleRiver'])
+channel.plot()

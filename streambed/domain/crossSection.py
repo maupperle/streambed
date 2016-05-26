@@ -2,6 +2,7 @@
 """ Channel cross-section methods """
 
 import numpy as np
+import matplotlib.pyplot as plt
 
 class CrossSection(object):
     
@@ -18,7 +19,13 @@ class CrossSection(object):
 
         """ data """
         data = np.genfromtxt(filePath, dtype=None, delimiter=',', skip_header=3, names=['x', 'depth'])
-        x = data['x']
-        depth = data['depth']
+        self.x = data['x']
+        self.depth = data['depth']
 
-        self.area = np.trapz(depth, x=x)
+        self.area = np.trapz(self.depth, x=self.x)
+
+    def plot(self):
+        plt.plot(self.x, self.depth, 'k')
+        plt.xlabel('x')
+        plt.ylabel('depth')
+        plt.gca().invert_yaxis()
