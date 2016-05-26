@@ -10,7 +10,7 @@ The Python distribution on your computer must include Numpy.
 
 Install using pip in the terminal or command prompt (Windows). [See this page](https://pip.pypa.io/en/stable/installing) if pip is not installed on your computer
 
-'''
+''' shell
 pip install streambed
 '''
 
