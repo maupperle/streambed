@@ -25,11 +25,12 @@ pip uninstall streambed
 
 #### Quick start
 
-Set parameters:
+Initialize a model:
 ```python
-parameters = streambed.Parameters(os.getcwd() + '/exampleData/')
+model = sb.Model('/tutorials/exampleData/')
 ```
-Initialize channel:
+Plot channel parameters:
 ```python
 channel = streambed.Channel(parameters.dataDirectory + 'LittleRiver.channel')
+channel.plot()
 ```
