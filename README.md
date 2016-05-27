@@ -31,6 +31,6 @@ model = sb.Model('/tutorials/exampleData/')
 ```
 Plot channel parameters:
 ```python
-channel = streambed.Channel(parameters.dataDirectory + 'LittleRiver.channel')
+channel = sb.Channel(model.domain['LittleRiver'])
 channel.plot()
 ```
