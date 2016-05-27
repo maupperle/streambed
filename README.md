@@ -27,7 +27,7 @@ pip uninstall streambed
 
 #### Example usage
 
-Initialize a model:
+Initialize a model by inputing the directory that contains data files:
 ```python
 model = streambed.Model('/tutorials/exampleData/')
 ```
