@@ -1,3 +1,5 @@
+This package is not yet fully functional.
+
 ## Streambed
 
 This Python library predicts reach-averaged streambed sediment grain size.
