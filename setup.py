@@ -3,7 +3,7 @@ from streambed import __version__
 
 setup(
     name = 'streambed',
-    packages = ['streambed','streambed/core','streambed/domain','streambed/tutorials','streambed/tutorials/exampleData'],
+    packages = ['streambed','streambed/core','streambed/domain','tutorials','tutorials/exampleData'],
     version =  __version__,
     description = 'Model streambed grain size',
     author = 'Nathan Lyons',

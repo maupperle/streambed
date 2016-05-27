@@ -7,15 +7,11 @@ North Carolina, USA.
 """
 
 import os
-import sys
-
-# import streambed library
-os.chdir("..")
-root = os.getcwd()
-sys.path.append(root + '/streambed')
 import streambed as sb
 
 # Initialize model with default parameters
+os.chdir("..")
+root = os.getcwd()
 model = sb.Model(root + '/tutorials/exampleData/')
 
 # Calculate cross-sectional at a site along the river
