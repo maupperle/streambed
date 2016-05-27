@@ -1,5 +1,10 @@
 from distutils.core import setup
+from setuptools.command.develop import develop
 from streambed import __version__
+
+class developer_install(develop):
+    def run(self):
+        develop.run(self)
 
 setup(
     name = 'streambed',
@@ -11,5 +16,13 @@ setup(
     url = 'https://github.com/nathanlyons/streambed',
     download_url = 'https://github.com/nathanlyons/streambed/tarball/0.1',
     keywords = ['stream', 'sediment', 'grain'],
-    classifiers = [],
+    classifiers = [
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Topic :: Scientific/Engineering :: Physics',
+        'Intended Audience :: Science/Research'
+        ],
+    cmdclass = {'develop': developer_install},
 )
