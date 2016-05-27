@@ -23,13 +23,14 @@ pip uninstall streambed
 
 [Developer installation](https://github.com/nathanlyons/streambed/wiki/Developer-Installation)
 
-#### Quick start
+#### Example usage
 
-Set parameters:
+Initialize a model:
 ```python
-parameters = streambed.Parameters(os.getcwd() + '/exampleData/')
+model = streambed.Model('/tutorials/exampleData/')
 ```
-Initialize channel:
+Plot channel parameters:
 ```python
-channel = streambed.Channel(parameters.dataDirectory + 'LittleRiver.channel')
+channel = streambed.Channel(model.domain['LittleRiver'])
+channel.plot()
 ```
