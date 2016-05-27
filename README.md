@@ -23,14 +23,14 @@ pip uninstall streambed
 
 [Developer installation](https://github.com/nathanlyons/streambed/wiki/Developer-Installation)
 
-#### Quick start
+#### Example usage
 
 Initialize a model:
 ```python
-model = sb.Model('/tutorials/exampleData/')
+model = streambed.Model('/tutorials/exampleData/')
 ```
 Plot channel parameters:
 ```python
-channel = sb.Channel(model.domain['LittleRiver'])
+channel = streambed.Channel(model.domain['LittleRiver'])
 channel.plot()
 ```
