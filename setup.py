@@ -14,7 +14,7 @@ setup(
     author = 'Nathan Lyons',
     author_email = 'nathan.j.lyons@gmail.com',
     url = 'https://github.com/nathanlyons/streambed',
-    download_url = 'https://github.com/nathanlyons/streambed/tarball/0.1',
+    download_url = 'https://github.com/nathanlyons/streambed/tarball/0.3',
     keywords = ['stream', 'sediment', 'grain'],
     classifiers = [
         'License :: OSI Approved :: MIT License',
