@@ -16,6 +16,11 @@ pip install streambed
 
 Streambed is now installed in the site-packages directory of your Python distribution.
 
+The library can be uninstalled also using the command line.
+```bash
+pip uninstall streambed
+```
+
 [Developer installation](https://github.com/nathanlyons/streambed/wiki/Developer-Installation)
 
 #### Quick start
