@@ -12,6 +12,14 @@ class Channel(object):
     """
     
     def __init__(self, filePath):
+        """ Initialize channel object using values from a .channel data file.
+        
+        Parameters
+        ----------
+        filePath : string
+            Full file path to .channel data file.  
+        
+        """
 
         data = np.genfromtxt(filePath, dtype=None, delimiter=',', names=True)
         self.x = data['x']
@@ -22,8 +30,24 @@ class Channel(object):
         self.slope = self.slope(self.distanceFromMouth, self.elevation)
 
     def slope(self, x, z):
-        """ Channel slope is calculated using a central-differencing window
-        along x. 
+        """ Calculate channel slope along a stream.
+        
+        Slope is calculated using a central-differencing window except at
+        channel endpoints where slope is calculated using the adjacent point.
+        
+        Parameters
+        ----------
+        x : array
+            Distance at each point along the channel.
+        z : array
+            Elevation at each point along the channel.
+            
+        Returns
+        -------
+        slope : array
+            Slope (percent) at each point along the channel.
+            
+            
         """
 
         lx = len(x)
@@ -41,6 +65,7 @@ class Channel(object):
         
     def plot(self):
         """ Plot channel map and longitudinal profile parameters. 
+        
         """        
         
         plt.figure()
