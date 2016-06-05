@@ -1,9 +1,14 @@
 #! /usr/bin/env python
 
 import numpy as np
+import numpy.polynomial.polynomial as poly
 import matplotlib.pyplot as plt
 
+
 class Channel(object):
+    calibration = [[4.739678e+008, 37.4], [9.013159e+008, 75.8], 
+                   [2.411279e+008, 17.6], [4.739678e+008, 37.4], 
+                   [9.013159e+008, 75.8]]
     
     """ Data structure and methods for stream channels.
     
@@ -28,6 +33,9 @@ class Channel(object):
         self.drainageArea = data['drainageArea']
         self.distanceFromMouth = data['distanceFromMouth']
         self.slope = self.slope(self.distanceFromMouth, self.elevation)
+        self.calibration = [[4.739678e+008, 37.4], [9.013159e+008, 75.8], 
+                            [2.411279e+008, 17.6], [4.739678e+008, 37.4], 
+                            [9.013159e+008, 75.8]]
 
     def slope(self, x, z):
         """ Calculate channel slope along a stream.
@@ -62,7 +70,43 @@ class Channel(object):
         slope.append((z[lx - 1] - z[lx - 2]) / (x[lx - 1] - x[lx - 2]))
         
         return slope
+    
+    def findQ(self):
+        """ Calculate the the predicted bankful flow from the drainage area.
+        Based on the equation Q = K*A^c where:
+        Q = Flowrate
+        A = Drainage Area
+        K,c = constants
         
+        Parameters
+        ------------        
+        calibSet: The equation will be calibrated based on known data inputted 
+                  from the calibSet argument in the form of a list of lists
+                  in the format [[A,Q],...]
+        self.drainageArea: This will be used to input the drainage area of the 
+                           of the fluvial region in question. 
+        
+        Creates a plot of Drainage Area by Flowrate based on the calibrated 
+        equation.
+        """
+        
+        "convert eqation of form Q=kA^c to log(Q)=log(k)+c*log(A)"
+        logA = [np.log10(coord[0]) for coord in self.calibration]
+        logQ = [np.log10(coord[1]) for coord in self.calibration]
+        coefs = poly.polyfit(logA, logQ, 1) 
+        "coeffecients are in the form of [log10(K), c]"
+        K = 10**coefs[0]
+        c = coefs[1]
+        estimQ = [K*(Area**c) for Area in self.drainageArea]
+        
+        plt.figure()
+        plt.plot(self.drainageArea, estimQ, 'k')
+        plt.xlabel('Drainage Area')
+        plt.ylable('Estimated Flow Rate')
+        
+        plt.show()
+        
+    
     def plot(self):
         """ Plot channel map and longitudinal profile parameters. 
         
