@@ -4,7 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Channel(object):
-    
     """ Data structure and methods for stream channels.
     
     Parameters are stored in points along the stream. Parameter values are
@@ -28,6 +27,9 @@ class Channel(object):
         self.drainageArea = data['drainageArea']
         self.distanceFromMouth = data['distanceFromMouth']
         self.slope = self.slope(self.distanceFromMouth, self.elevation)
+        self.calibration = [[4.739678e+008, 37.4], [9.013159e+008, 75.8], 
+                            [2.411279e+008, 17.6], [4.739678e+008, 37.4], 
+                            [9.013159e+008, 75.8]]
 
     def slope(self, x, z):
         """ Calculate channel slope along a stream.
@@ -62,6 +64,46 @@ class Channel(object):
         slope.append((z[lx - 1] - z[lx - 2]) / (x[lx - 1] - x[lx - 2]))
         
         return slope
+    
+    def findQ(self):
+        """ Calculate the predicted bankfull discharge from the drainage area.
+        Based on the equation Q = K*A^c where:
+        Q = Discharge
+        A = Drainage Area
+        K,c = constants
+        
+        Parameters
+        ------------        
+        calibSet: The equation will be calibrated based on known data inputted 
+                  from the calibSet argument in the form of a list of lists
+                  in the format [[A,Q],...]
+        self.drainageArea: This will be used to input the drainage area of the 
+                           of the fluvial region in question. 
+        
+        Creates a plot of Drainage Area by Discharge based on the calibration 
+        equation.
+        """
+        
+        calibration = [[4.739678e+008, 37.4], [9.013159e+008, 75.8], 
+                   [2.411279e+008, 17.6], [4.739678e+008, 37.4], 
+                   [9.013159e+008, 75.8]]        
+        
+        "convert equation of form Q=kA^c to log(Q)=log(k)+c*log(A)"
+        logA = [np.log10(coord[0]) for coord in calibration]
+        logQ = [np.log10(coord[1]) for coord in calibration]
+        coefs = np.polynomial.polynomial.polyfit(logA, logQ, 1) 
+        
+        "coeffecients are in the form of [log10(K), c]"
+        K = 10**coefs[0]
+        c = coefs[1]
+        self.estimQ = [K * (area**c) for area in self.drainageArea]
+        
+        plt.figure()
+        plt.plot(self.drainageArea, self.estimQ, 'k')
+        plt.xlabel('Drainage Area')
+        plt.ylabel('Estimated Discharge')
+        
+        plt.show()
         
     def plot(self):
         """ Plot channel map and longitudinal profile parameters. 
@@ -76,20 +118,25 @@ class Channel(object):
         
         plt.figure()
         
-        plt.subplot(3, 1, 1)
+        plt.subplot(4, 1, 1)
         plt.plot(self.distanceFromMouth, self.elevation, 'k')
         plt.xlabel('distance from mouth')
         plt.ylabel('elevation')
         
-        plt.subplot(3, 1, 2)
+        plt.subplot(4, 1, 2)
         plt.plot(self.distanceFromMouth, self.slope, 'k')
         plt.xlabel('distance from mouth')
         plt.ylabel('slope')
 
-        plt.subplot(3, 1, 3)
+        plt.subplot(4, 1, 3)
         plt.plot(self.distanceFromMouth, self.drainageArea, 'k+')
         plt.xlabel('distance from mouth')
         plt.ylabel('drainage area')
+        
+        plt.subplot(4, 1, 4)
+        plt.plot(self.distanceFromMouth, self.estimQ, 'k+')
+        plt.xlabel('distance from mouth')
+        plt.ylabel('discharge')
                 
         plt.show()
         
