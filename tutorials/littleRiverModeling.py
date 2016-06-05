@@ -20,4 +20,3 @@ print('cross sectional area = ' + str(xs.area))
 # Initialize channel
 channel = sb.Channel(model.domain['LittleRiver'])
 channel.plot()
-channel.findQ()
