@@ -92,4 +92,26 @@ class Channel(object):
         plt.ylabel('drainage area')
                 
         plt.show()
-    
+        
+    def get_calibration_data(self, filePath):
+        """ Get data from a .calibration file
+        
+        Parameters
+        ----------
+        filePath : array
+            The full path and file name to the .calibration file.
+
+        Returns
+        -------
+        dataDictionary : dictionary
+            Contains the calibration coefficients and exponents.
+            
+        """
+        data = np.genfromtxt(filePath, dtype=None, delimiter=',', names=True)
+            
+        dataDictionary = {}
+        dataDictionary['m'] = data['m']
+        dataDictionary['b'] = data['b']
+        
+        return dataDictionary
+        

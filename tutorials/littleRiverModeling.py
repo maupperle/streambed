@@ -20,3 +20,9 @@ print('cross sectional area = ' + str(xs.area))
 # Initialize channel
 channel = sb.Channel(model.domain['LittleRiver'])
 channel.plot()
+
+# Calibrate drainage area-discharge relationship
+dataDictionary = sb.get_calibration_data(model.domain['SandhillsGages'])
+
+# Estimate discharge along stream
+
