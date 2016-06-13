@@ -27,9 +27,6 @@ class Channel(object):
         self.drainageArea = data['drainageArea']
         self.distanceFromMouth = data['distanceFromMouth']
         self.slope = self.slope(self.distanceFromMouth, self.elevation)
-        self.calibration = [[4.739678e+008, 37.4], [9.013159e+008, 75.8], 
-                            [2.411279e+008, 17.6], [4.739678e+008, 37.4], 
-                            [9.013159e+008, 75.8]]
 
     def slope(self, x, z):
         """ Calculate channel slope along a stream.
@@ -46,10 +43,9 @@ class Channel(object):
             
         Returns
         -------
-        slope : array
+        slope : numpy array
             Slope (percent) at each point along the channel.
-            
-            
+                
         """
 
         lx = len(x)
@@ -63,9 +59,9 @@ class Channel(object):
         
         slope.append((z[lx - 1] - z[lx - 2]) / (x[lx - 1] - x[lx - 2]))
         
-        return slope
+        return np.array(slope)
     
-    def findQ(self):
+    def findQ(self, filePath):
         """ Calculate the predicted bankfull discharge from the drainage area.
         Based on the equation Q = K*A^c where:
         Q = Discharge
@@ -83,20 +79,21 @@ class Channel(object):
         Creates a plot of Drainage Area by Discharge based on the calibration 
         equation.
         """
-        
-        calibration = [[4.739678e+008, 37.4], [9.013159e+008, 75.8], 
-                   [2.411279e+008, 17.6], [4.739678e+008, 37.4], 
-                   [9.013159e+008, 75.8]]        
-        
-        "convert equation of form Q=kA^c to log(Q)=log(k)+c*log(A)"
-        logA = [np.log10(coord[0]) for coord in calibration]
-        logQ = [np.log10(coord[1]) for coord in calibration]
+               
+        """ get calibration data """
+        data = np.genfromtxt(filePath, dtype=None, delimiter=',', names=True)
+        calibrationQ = data['Q']
+        calibrationA = data['A']
+                
+        """ convert equation of form Q=kA^c to log(Q)=log(k)+c*log(A) """
+        logA = [np.log10(A) for A in calibrationA]
+        logQ = [np.log10(Q) for Q in calibrationQ]
         coefs = np.polynomial.polynomial.polyfit(logA, logQ, 1) 
         
-        "coeffecients are in the form of [log10(K), c]"
+        """ coeffecients are in the form of [log10(K), c] """
         K = 10**coefs[0]
         c = coefs[1]
-        self.estimQ = [K * (area**c) for area in self.drainageArea]
+        self.estimQ = np.array([K * (area**c) for area in self.drainageArea])
         
         plt.figure()
         plt.plot(self.drainageArea, self.estimQ, 'k')
@@ -108,7 +105,7 @@ class Channel(object):
     def plot(self):
         """ Plot channel map and longitudinal profile parameters. 
         
-        """        
+        """
         
         plt.figure()
         plt.plot(self.x, self.y, 'k')
@@ -140,25 +137,20 @@ class Channel(object):
                 
         plt.show()
         
-    def get_calibration_data(self, filePath):
-        """ Get data from a .calibration file
+    def predict_bed_grain_size(self, parameters):
+        """ Predict reach-averaged streambed grain size.
         
-        Parameters
-        ----------
-        filePath : array
-            The full path and file name to the .calibration file.
-
-        Returns
-        -------
-        dataDictionary : dictionary
-            Contains the calibration coefficients and exponents.
-            
-        """
-        data = np.genfromtxt(filePath, dtype=None, delimiter=',', names=True)
-            
-        dataDictionary = {}
-        dataDictionary['m'] = data['m']
-        dataDictionary['b'] = data['b']
+        Estimate bed shear stress
+        tb = waterDensity * gravitationalAcceleration * manningsn^(3/5) .* Q.^(3/5) .* w.^(-3/5) .* (S.^(7/10))
         
-        return dataDictionary
+        Estimate grain size
+        grainSize = tb / ((ps - waterDensity) .* gravitationalAcceleration .* tc)
         
+        """        
+        
+        """ width estimation """
+        kw = 1.06e-32
+        b = 3.71
+        self.width = (kw * self.drainageArea**b)        
+        
+        bedShearStress = self.estimQ.dot(parameters.waterDensity * parameters.gravitationalAcceleration * parameters.manningsn) * self.width**(-3/5) * self.slope**(7/10)
