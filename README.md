@@ -17,10 +17,14 @@ Those who wish to modify and contribute to this library should follow the
 
 Initialize a model by inputing the directory that contains data files:
 ```python
-> model = streambed.Model('/tutorials/exampleData/')
+model = streambed.Model('/tutorials/exampleData/')
+```
+Print the domains in the data directory dictionary
+```python
+print(model.domain.keys())
 ```
 Plot channel parameters:
 ```python
-> channel = streambed.Channel(model.domain['LittleRiver'])
-> channel.plot()
+channel = streambed.Channel(model.domain['LittleRiver'])
+channel.plot()
 ```
