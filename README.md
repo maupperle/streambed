@@ -19,7 +19,7 @@ Initialize a model by inputing the directory that contains data files:
 ```python
 model = streambed.Model('/tutorials/exampleData/')
 ```
-Print the domains in the data directory dictionary
+Print the domains in the data directory dictionary:
 ```python
 print(model.domain.keys()) 
 # ['LittleRiver', 'NiagaraCarthrage-78', 'SandhillsGages']
