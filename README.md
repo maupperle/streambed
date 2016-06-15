@@ -29,3 +29,5 @@ Plot channel parameters:
 channel = streambed.Channel(model.domain['LittleRiver'])
 channel.plot()
 ```
+
+See more in [Creaing a model](https://github.com/nathanlyons/streambed/wiki/Creating-a-model).
