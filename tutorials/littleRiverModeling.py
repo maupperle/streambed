@@ -9,10 +9,10 @@ North Carolina, USA.
 import os
 import streambed as sb
 
-# Initialize model with default parameters
+# Initialize model with default parameters. Domains are printed when initializing.
 model = sb.Model(os.getcwd() + '/exampleData/')
 
-# Calculate cross-sectional at a site along the river
+# Calculate cross-sectional area at a site along the river
 xs = sb.CrossSection(model.domain['NiagaraCarthrage-78'])
 xs.plot()
 print('cross sectional area = ' + str(xs.area))
@@ -20,10 +20,11 @@ print('cross sectional area = ' + str(xs.area))
 # Initialize channel
 channel = sb.Channel(model.domain['LittleRiver'])
 
-# Estimate discharge along stream
+# Estimate discharge along a channel using calibration data
 channel.findQ(model.domain['SandhillsGages'])
 
 # Plot longitudinal parameters
 channel.plot()
 
+# Model streambed grain size along the length of the channel
 channel.predict_bed_grain_size(model.parameters)
