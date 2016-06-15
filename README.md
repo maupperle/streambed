@@ -30,4 +30,4 @@ channel = streambed.Channel(model.domain['LittleRiver'])
 channel.plot()
 ```
 
-See more in [Creaing a model](https://github.com/nathanlyons/streambed/wiki/Creating-a-model).
+See more in [Creating a model](https://github.com/nathanlyons/streambed/wiki/Creating-a-model).
