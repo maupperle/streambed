@@ -22,13 +22,16 @@ class Model(object):
     
     def __set_domains(self):
         channelPaths = glob.glob(self.dataDirectory + '/*.channel')
+        calibrationPaths = glob.glob(self.dataDirectory + '/*.calibration')
         xsectionPaths = glob.glob(self.dataDirectory + '/*.xsection')    
         
         print('Domains in data directory:\n')
         
         self.__set_domain_type('channels', channelPaths)
 
-        self.__set_domain_type('xsections', xsectionPaths)           
+        self.__set_domain_type('xsections', xsectionPaths)
+
+        self.__set_domain_type('calibrations', calibrationPaths)           
         
         print('\n----------------------------')
     

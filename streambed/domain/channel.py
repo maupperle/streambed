@@ -4,7 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Channel(object):
-    
     """ Data structure and methods for stream channels.
     
     Parameters are stored in points along the stream. Parameter values are
@@ -44,10 +43,9 @@ class Channel(object):
             
         Returns
         -------
-        slope : array
+        slope : numpy array
             Slope (percent) at each point along the channel.
-            
-            
+                
         """
 
         lx = len(x)
@@ -61,12 +59,53 @@ class Channel(object):
         
         slope.append((z[lx - 1] - z[lx - 2]) / (x[lx - 1] - x[lx - 2]))
         
-        return slope
+        return np.array(slope)
+    
+    def findQ(self, filePath):
+        """ Calculate the predicted bankfull discharge from the drainage area.
+        Based on the equation Q = K*A^c where:
+        Q = Discharge
+        A = Drainage Area
+        K,c = constants
+        
+        Parameters
+        ------------        
+        calibSet: The equation will be calibrated based on known data inputted 
+                  from the calibSet argument in the form of a list of lists
+                  in the format [[A,Q],...]
+        self.drainageArea: This will be used to input the drainage area of the 
+                           of the fluvial region in question. 
+        
+        Creates a plot of Drainage Area by Discharge based on the calibration 
+        equation.
+        """
+               
+        """ get calibration data """
+        data = np.genfromtxt(filePath, dtype=None, delimiter=',', names=True)
+        calibrationQ = data['Q']
+        calibrationA = data['A']
+                
+        """ convert equation of form Q=kA^c to log(Q)=log(k)+c*log(A) """
+        logA = [np.log10(A) for A in calibrationA]
+        logQ = [np.log10(Q) for Q in calibrationQ]
+        coefs = np.polynomial.polynomial.polyfit(logA, logQ, 1) 
+        
+        """ coeffecients are in the form of [log10(K), c] """
+        K = 10**coefs[0]
+        c = coefs[1]
+        self.estimQ = np.array([K * (area**c) for area in self.drainageArea])
+        
+        plt.figure()
+        plt.plot(self.drainageArea, self.estimQ, 'k')
+        plt.xlabel('Drainage Area')
+        plt.ylabel('Estimated Discharge')
+        
+        plt.show()
         
     def plot(self):
         """ Plot channel map and longitudinal profile parameters. 
         
-        """        
+        """
         
         plt.figure()
         plt.plot(self.x, self.y, 'k')
@@ -76,42 +115,42 @@ class Channel(object):
         
         plt.figure()
         
-        plt.subplot(3, 1, 1)
+        plt.subplot(4, 1, 1)
         plt.plot(self.distanceFromMouth, self.elevation, 'k')
         plt.xlabel('distance from mouth')
         plt.ylabel('elevation')
         
-        plt.subplot(3, 1, 2)
+        plt.subplot(4, 1, 2)
         plt.plot(self.distanceFromMouth, self.slope, 'k')
         plt.xlabel('distance from mouth')
         plt.ylabel('slope')
 
-        plt.subplot(3, 1, 3)
+        plt.subplot(4, 1, 3)
         plt.plot(self.distanceFromMouth, self.drainageArea, 'k+')
         plt.xlabel('distance from mouth')
         plt.ylabel('drainage area')
+        
+        plt.subplot(4, 1, 4)
+        plt.plot(self.distanceFromMouth, self.estimQ, 'k+')
+        plt.xlabel('distance from mouth')
+        plt.ylabel('discharge')
                 
         plt.show()
         
-    def get_calibration_data(self, filePath):
-        """ Get data from a .calibration file
+    def predict_bed_grain_size(self, parameters):
+        """ Predict reach-averaged streambed grain size.
         
-        Parameters
-        ----------
-        filePath : array
-            The full path and file name to the .calibration file.
-
-        Returns
-        -------
-        dataDictionary : dictionary
-            Contains the calibration coefficients and exponents.
-            
-        """
-        data = np.genfromtxt(filePath, dtype=None, delimiter=',', names=True)
-            
-        dataDictionary = {}
-        dataDictionary['m'] = data['m']
-        dataDictionary['b'] = data['b']
+        Estimate bed shear stress
+        tb = waterDensity * gravitationalAcceleration * manningsn^(3/5) .* Q.^(3/5) .* w.^(-3/5) .* (S.^(7/10))
         
-        return dataDictionary
+        Estimate grain size
+        grainSize = tb / ((ps - waterDensity) .* gravitationalAcceleration .* tc)
         
+        """        
+        
+        """ width estimation """
+        kw = 1.06e-32
+        b = 3.71
+        self.width = (kw * self.drainageArea**b)        
+        
+        bedShearStress = self.estimQ.dot(parameters.waterDensity * parameters.gravitationalAcceleration * parameters.manningsn) * self.width**(-3/5) * self.slope**(7/10)
