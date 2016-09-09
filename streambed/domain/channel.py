@@ -102,9 +102,41 @@ class Channel(object):
         
         plt.show()
    
-   
+   def map_channel(filePath, xsections, self):
+        """
+        Creates a map of the channel using longitudinal profile data that 
+        includes markers indicating where any and all crosssections have been
+        taken.
+        
+        Paramenters
+        -----------
+        filePath:  A string of the directory to the channel domain. 
+                   (this is the .channel file)
+        xsections: a list of strings of the directories to the xsection 
+                   domains that will be marked on the map. (these are the 
+                   .xsection files)
+        -----------
 
-
+        Example format for input domains are located in dataFileTemplates.
+        """
+        xSectionList = []
+        
+        for path in xsections:
+            with open(path,'r') as f_in:
+                next(f_in)
+                next(f_in)
+                coordString = f_in.readline()
+                coordString = coordString[:-1]
+                coordList = coordString.split(',')
+                coords = [float(number)for number in coordList]
+                xSectionList.append(coords)
+        xCoordPoints = [coord[0] for coord in xSectionList]
+        yCoordPoints = [coord[1] for coord in xSectionList]
+            
+        plt.figure(num=4)
+        plt.plot(self.x, self.y, 'k', xCoordPoints, yCoordPoints, 'ro')
+        plt.xlabel('Easting')
+        plt.ylable('Northing')
      
     def plot(self):
         """ Plot channel map and longitudinal profile parameters. 
