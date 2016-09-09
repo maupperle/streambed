@@ -4,6 +4,8 @@
 Example data is from the Little River, a tributary of the Cape Fear River in
 North Carolina, USA.
 """
+import sys
+sys.path.append("C:\Users\Matthew\Documents\Streambed_Mapping\streambed")
 
 import os
 import streambed as sb
@@ -21,6 +23,8 @@ channel = sb.Channel(model.domain['LittleRiver'])
 
 # Estimate discharge along a channel using calibration data
 channel.findQ(model.domain['SandhillsGages'])
+
+
 
 # Plot longitudinal parameters
 channel.plot()

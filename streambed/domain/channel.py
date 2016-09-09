@@ -95,13 +95,17 @@ class Channel(object):
         c = coefs[1]
         self.estimQ = np.array([K * (area**c) for area in self.drainageArea])
         
-        plt.figure()
-        plt.plot(self.drainageArea, self.estimQ, 'k')
+        plt.figure(num=3)
+        plt.scatter(self.drainageArea, self.estimQ, marker='.')
         plt.xlabel('Drainage Area')
         plt.ylabel('Estimated Discharge')
         
         plt.show()
-        
+   
+   
+
+
+     
     def plot(self):
         """ Plot channel map and longitudinal profile parameters. 
         
